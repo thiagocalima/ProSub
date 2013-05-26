@@ -1,7 +1,13 @@
 package Apresentacao;
 
+import Dominio.EstadoAusencia;
+import Modelos.AusenciaModel;
+import Service.ListaAlocacoesPendentesService;
 import java.awt.Toolkit;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -33,9 +39,35 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         
         if (isPending) {
             btn_RejeitarAlocacao.setEnabled(false);
+            ListaAlocacoesPendentesService listaAlocacoesPendentes = null;
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            for (AusenciaModel model : listaAusencias) {
+                if (model.estado == EstadoAusencia.Alocacao_Pendente) {
+                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
+                    tableModel.addRow(new Object[]{model.toStringId(),
+                                                    model.toStringProfessorAusente(),
+                                                    model.toStringDataInicio(),
+                                                    model.toStringDataFim(),
+                                                    model.toStringProfessorSubstituto(),
+                                                    model.toStringEstado()});
+                }
+            }
         } else {
             btn_CancelarAusencia.setEnabled(false);
             btn_CancelarAulas.setEnabled(false);
+            ListaAlocacoesPendentesService listaAlocacoesPendentes = null;
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            for (AusenciaModel model : listaAusencias) {
+                if (model.estado == EstadoAusencia.Alocacao_Efetuada) {
+                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
+                    tableModel.addRow(new Object[]{model.toStringId(),
+                                                    model.toStringProfessorAusente(),
+                                                    model.toStringDataInicio(),
+                                                    model.toStringDataFim(),
+                                                    model.toStringProfessorSubstituto(),
+                                                    model.toStringEstado()});
+                }
+            }
         }
     }
     
