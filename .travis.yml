@@ -12,4 +12,4 @@ before_install:
  - sudo apt-get install netbeans
  - sudo apt-get install mysql-server mysql-client
  - sudo apt-get install openjdk-7-jre
- - sudo tree netbeans*/java/modules/ext/eclipselink/
+ - sudo find . | grep persistence
