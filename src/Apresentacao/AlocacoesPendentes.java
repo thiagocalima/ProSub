@@ -6,7 +6,6 @@ import Service.ListaAlocacoesPendentesService;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
