@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Thiago
+ * @author Thiago Lima
  */
 public class ListaAlocacoesPendentesService {
     private List<AusenciaModel> listaDeAusencias = null;
