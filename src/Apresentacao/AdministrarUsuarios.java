@@ -278,7 +278,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         //Remember: colocar no ultimo parametros o ID recuperado do banco de dados
         long id = 0;
         try {
-            aum.EditarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex(), id);
+            aum.EditarUsuario(txt_Senha.getText(),cmb_Perfil.getSelectedIndex(), id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

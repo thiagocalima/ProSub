@@ -4,10 +4,14 @@
  */
 package Service.Testes;
 
+import DataMapper.PopulateDB;
 import DataMapper.UsuarioJpaController;
+import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Usuario;
 import Service.LoginService;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import junit.framework.Assert;
@@ -24,13 +28,9 @@ import static org.junit.Assert.*;
 public class LoginServiceTeste {
     
     Usuario user;
-    Usuario user2;
-    Usuario user3;
-    Usuario user4;
-    Usuario user5;
-    Usuario user6;
-    LoginService LgnService = null;
+    LoginService LgnService;
     List<Usuario> ListaUser;
+    UsuarioJpaController UserController;
     
     
     public LoginServiceTeste() {
@@ -39,39 +39,34 @@ public class LoginServiceTeste {
     @Before
     public void setUp() {
         
+        PopulateDB.recreateDB();
         
+        user = new Usuario("Calebe","123456");
         
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        UserController = new UsuarioJpaController(emf);
+        UserController.create(user);
         
-        user2 = new Usuario("Calebe2","1234566");
-        user3 = new Usuario("Calebe3","1234566");
-        user4 = new Usuario("Calebe4","1234566");
-        user5 = new Usuario("Calebe5","1234566");
-        user6 = new Usuario("Calebe","123456");
-        
-
+        LgnService = new LoginService();
     }
     
     @After
     public void tearDown() {
+        try {
+            UserController.destroy(user.getId());
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(LoginServiceTeste.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     
     @Test
-    public void ValidaUsuarioeSenha(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
-        UsuarioJpaController UserController = new UsuarioJpaController(emf);
-        //UserController.create(user6);
-        user = new Usuario("Calebe", "123456");
-        System.err.print(user);
-       //if (LgnService.VerificarUsuarioESenha(user.getUsuario(), user.getSenha())){
-           //Assert.assertTrue(true);
-       //}else{
-           //Assert.assertFalse(true);
-       //}
+    public void testeValidaUsuarioeSenha(){
+
+        
+        Assert.assertTrue(LgnService.VerificarUsuarioESenha("Calebe", "123456"));
+        Assert.assertFalse(LgnService.VerificarUsuarioESenha("Calebe", ""));
+        Assert.assertFalse(LgnService.VerificarUsuarioESenha("noEcsiste", ""));
+        
     }
     
 }

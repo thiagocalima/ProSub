@@ -8,7 +8,10 @@ import DataMapper.UsuarioJpaController;
 import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Usuario;
 import Modelos.UsuarioModel;
+import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -16,47 +19,50 @@ import java.util.List;
  */
 public class AdministrarUsuariosService {
     
-    private Usuario user;
-    private List<UsuarioModel> ListaDeUsuarios = null;
-    private List<Usuario> ListaDeUsuarioDummy = null;
-    private UsuarioJpaController UserJpaController;
-    
+   //private UsuarioJpaController controller;
+    private EntityManagerFactory emf;
     
     public AdministrarUsuariosService(){
         
+        emf = Persistence.createEntityManagerFactory("ProSubPU");
+        //controller = new UsuarioJpaController(emf);
     }
     
     public void SalvarUsuario(String Nome, String Senha, int profile){
-        user = new Usuario();
-        user.setSenha(Senha);
-        user.setPermissao(profile);
-        UserJpaController.create(user);
+        UsuarioJpaController controller = new UsuarioJpaController(emf);
+        Usuario usuario = new Usuario(Nome);
+        usuario.setSenha(Senha);
+        usuario.setPermissao(profile);
+        controller.create(usuario);
     }
     
-    public void EditarUsuario(String Nome, String Senha, int profile, Long id) throws NonexistentEntityException, Exception{
-        user = new Usuario();
-        user.setUsuario(Nome);
-        user.setSenha(Senha);
-        user.setPermissao(profile);
-        user.setId(id);
-        UserJpaController.edit(user);
+    public void EditarUsuario(String senha, int profile, Long id) throws NonexistentEntityException, Exception{
+        
+        UsuarioJpaController controller = new UsuarioJpaController(emf);
+        Usuario usuarioAEditar = controller.findUsuario(id);
+        
+        usuarioAEditar.setUsuario(usuarioAEditar.getUsuario());
+        usuarioAEditar.setSenha(senha);
+        usuarioAEditar.setPermissao(profile);
+        
+        controller.edit(usuarioAEditar);
     }
     
     public List<UsuarioModel> ListarUsuarios(){
         
-        ListaDeUsuarioDummy = UserJpaController.findUsuarioEntities();
+        UsuarioJpaController controller = new UsuarioJpaController(emf);
+        List<Usuario> usuarios = controller.findUsuarioEntities();
+        List<UsuarioModel> modelos = new LinkedList<UsuarioModel>();
         
-        for (Usuario usuario : ListaDeUsuarioDummy){
+        for (Usuario usuario : usuarios){
             UsuarioModel model = new UsuarioModel();
             model.Usuario = usuario.getUsuario();
             model.Senha = usuario.getSenha();
             model.profile = usuario.getPermissao();
             model.id = usuario.getId();
-            ListaDeUsuarios.add(model);
+            modelos.add(model);
         }
-        return ListaDeUsuarios;
-        
-        
+        return modelos;   
     }
 
 

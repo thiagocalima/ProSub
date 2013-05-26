@@ -137,7 +137,7 @@ public class Login extends javax.swing.JFrame {
     		} else {
                     this.dispose();
                     String str = new String(senha);
-                    LoginService LgnService = null;
+                    LoginService LgnService = new LoginService();
                     if (!LgnService.VerificarUsuarioESenha(usuario, str)){
                         JOptionPane.showMessageDialog(null, "Usuário e Senha Inválidos!", "Login", JOptionPane.INFORMATION_MESSAGE);
                     } else {
