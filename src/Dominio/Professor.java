@@ -126,6 +126,11 @@ public class Professor implements Serializable {
         int diasEntre = this.diasEntre(periodoAusencia);
         
         Calendar data = periodoAusencia.getLimiteInferior();
+        Calendar finalAusencia = periodoAusencia.getLimiteSuperior();
+        
+        finalAusencia.set(Calendar.HOUR_OF_DAY, 23);
+        finalAusencia.set(Calendar.MINUTE, 59);
+        
         List<Aula> aulasComprometidas = new LinkedList<Aula>();
         
         while(data.before(periodoAusencia.getLimiteSuperior())){
