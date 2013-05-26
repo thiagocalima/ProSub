@@ -116,6 +116,17 @@ public class AusenciaJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Ausencia findAusencia(String codigo){
+    List<Ausencia> ausencias = this.findAusenciaEntities();
+    for(Ausencia ausencia : ausencias){
+        if(ausencia.getCodigo().equals(codigo))
+            return ausencia;
+    }
+        
+        return null;
+    }
+    
 
     public int getAusenciaCount() {
         EntityManager em = getEntityManager();

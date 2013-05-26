@@ -47,7 +47,7 @@ public class TesteDasEntities {
         Periodo periodo = new Periodo(limiteInf, limiteSup);
         periodoController.create(periodo);
         
-        Ausencia ausencia = new Ausencia(periodo, p, "Dor de barriga");
+        Ausencia ausencia = new Ausencia("223", periodo, p, "Dor de barriga");
         
         ausenciaController.create(ausencia);
 

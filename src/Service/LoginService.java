@@ -19,9 +19,6 @@ import javax.persistence.Persistence;
  */
 public class LoginService {
     
-    
-    //private Usuario LoginInformation;
-    //private List<Usuario> ListaDeUsuario = null;
     private UsuarioJpaController controller;
     
     public LoginService(){

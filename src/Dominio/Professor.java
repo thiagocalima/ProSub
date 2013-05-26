@@ -29,9 +29,7 @@ public class Professor implements Serializable {
     
     private String nome;
     
-    
     @OneToMany
-    @ElementCollection
     private List<Aula> grade;
     
     

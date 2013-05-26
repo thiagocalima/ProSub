@@ -5,12 +5,19 @@
 package Service;
 
 import DataMapper.AusenciaJpaController;
+import DataMapper.PeriodoJpaController;
+import DataMapper.ProfessorJpaController;
 import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Aula;
 import Dominio.Ausencia;
 import Dominio.Periodo;
 import Dominio.Professor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -18,39 +25,55 @@ import java.util.Calendar;
  */
 public class NotificacaoService {
     
-    private Ausencia ausencia;
-    private Periodo periodo;
-    private Professor professorAusente;
-    private Professor professorSubstituto;
-    private Calendar dataInicio;
-    private Calendar dataFim;
-    private Aula aulaInicio;
-    private Aula aulaFim;
-    private String motivo;
-    private AusenciaJpaController ausenciaJpaController;
+    private AusenciaJpaController ausenciaController;
+    private PeriodoJpaController periodoController;
+    private ProfessorJpaController profController;
     
+    public NotificacaoService(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        ausenciaController = new AusenciaJpaController(emf);
+        periodoController = new PeriodoJpaController(emf);
+        profController = new ProfessorJpaController(emf);
+    }
     
-    private NotificacaoService(){
+    public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, Long idProfessorSubstituto) throws ParseException {
+        
+        Calendar inicio = Calendar.getInstance();
+        Calendar fim = Calendar.getInstance();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        inicio.setTime(sdf.parse(dataInicio));
+        fim.setTime(sdf.parse(dataFim));
+        
+        Periodo periodo = new Periodo(inicio, fim);
+        
+        periodoController.create(periodo);
+        
+        Professor professor = profController.findProfessor(idProfessor);
+        Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
+        
+        Random r = new Random();
+        
+        String codigo = Integer.toString(r.nextInt(10000));
+        
+        Ausencia ausencia = new Ausencia(codigo, periodo, professor, motivo);
+        ausencia.indicarSubstituto(professorSubstituto);
+        
+        
+        ausenciaController.create(ausencia);
+        
+        return codigo;
         
     }
     
-    public void SalvarNotificacao(Professor professorAusente, Professor professorSubstituto, Calendar dataInicio, Calendar dataFim, Aula aulaInicio, Aula aulaFim, String motivo) {
-        periodo = new Periodo(dataInicio, dataFim);
-        ausencia = new Ausencia(periodo, professorAusente, motivo);
-        
-        if (professorSubstituto != null) {
-            ausencia.indicarSubstituto(professorSubstituto);
-        }
-        
-        ausenciaJpaController.create(ausencia);
-    }
-    
-    public void EditarNotificacao(Professor professorAusente, Professor professorSubstituto, Calendar dataInicio, Calendar dataFim, Aula aulaInicio, Aula aulaFim, String motivo, Long id) throws NonexistentEntityException, Exception {
-        periodo = new Periodo(dataInicio, dataFim);
-        ausencia = new Ausencia(periodo, professorAusente, motivo);
-        
-        ausencia.setId(id);
-        
-        ausenciaJpaController.edit(ausencia);
-    }
+//    public void EditarNotificacao(Professor professorAusente, Professor professorSubstituto, Calendar dataInicio, Calendar dataFim, Aula aulaInicio, Aula aulaFim, String motivo, Long id) throws NonexistentEntityException, Exception {
+//        periodo = new Periodo(dataInicio, dataFim);
+//        ausencia = new Ausencia(periodo, professorAusente, motivo);
+//        
+//        ausencia.setId(id);
+//        
+//        ausenciaJpaController.edit(ausencia);
+//    }
+
 }

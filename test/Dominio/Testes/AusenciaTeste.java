@@ -38,7 +38,7 @@ public class AusenciaTeste {
         professor = EasyMock.createMock(Professor.class);
         professorSubstituto = EasyMock.createMock(Professor.class);
         motivo = "Congresso internacional";
-        ausencia = new Ausencia(periodo, professor, motivo);
+        ausencia = new Ausencia("1234", periodo, professor, motivo);
         estado = EstadoAusencia.Alocacao_Pendente;
     }
     
@@ -50,6 +50,7 @@ public class AusenciaTeste {
     //
     @Test
     public void testeDeveSerInicializadoComPeriodoProfessorMotivoESemProfessorSubstituto() {
+        Assert.assertEquals(ausencia.getCodigo(), "1234");
         Assert.assertEquals(ausencia.getPeriodo(), periodo);
         Assert.assertEquals(ausencia.getProfessor(), professor);
         Assert.assertEquals(ausencia.getMotivo(), motivo);

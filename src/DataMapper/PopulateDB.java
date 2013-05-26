@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package DataMapper;
+import Dominio.Aula;
 import Dominio.Periodo;
 import Dominio.Professor;
 import Dominio.Usuario;
@@ -143,43 +144,44 @@ public class PopulateDB {
     private static void populateProfessores(EntityManagerFactory emf){
         
         
-//        PeriodoJpaController periodoJpa = new PeriodoJpaController(emf);
-//        
-//        Calendar comeco1 = Calendar.getInstance();
-//        Calendar fim1 = Calendar.getInstance();
-//        
-//        comeco1.set(2013, 06, 10, 10, 10);
-//        fim1.set(2013, 06, 10, 10, 20);
-//        
-//        Periodo periodo = new Periodo(comeco1, fim1);
-//        
-//        periodoJpa.create(periodo);
-//        
-//        long id = 1;
-//        
-//        Periodo p = periodoJpa.findPeriodo(id);
+        PeriodoJpaController periodoJpa = new PeriodoJpaController(emf);
+        AulaJpaController aulaJpa = new AulaJpaController(emf);
         
-//        int hora = p.getLimiteInferior().get(Calendar.HOUR_OF_DAY);
-//        int minuto = p.getLimiteInferior().get(Calendar.MINUTE);
-//        
-        //Calendar 
+        Calendar comeco1 = Calendar.getInstance();
+        Calendar fim1 = Calendar.getInstance();
+        comeco1.set(2013, 06, 10, 10, 10);
+        fim1.set(2013, 06, 10, 10, 20);
         
-//        Periodo per1 = new Periodo (new Calendar())
+        Periodo periodo = new Periodo(comeco1, fim1);
         
-        Professor p1 = new Professor("Calebe");
-        Professor p2 = new Professor("Ana Claudia");
+        periodoJpa.create(periodo);
+        
+        Aula aula = new Aula(Calendar.MONDAY, periodo);
+        aulaJpa.create(aula);
+        
+        Calendar comeco2 = Calendar.getInstance();
+        Calendar fim2 = Calendar.getInstance();
+        comeco2.set(2013, 06, 10, 18, 20);
+        fim2.set(2013, 06, 10, 20, 0);
+        
+        Periodo periodo2 = new Periodo(comeco2, fim2);
+        
+        periodoJpa.create(periodo2);
+        
+        Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
+        aulaJpa.create(aula2);
+        
+        Professor prof1 = new Professor("Calebe");
+        prof1.adicionarAula(aula);
+        
+        Professor prof2 = new Professor("Ana Claudia");
+        prof2.adicionarAula(aula2);
+        
         
         ProfessorJpaController profJpa = new ProfessorJpaController(emf);
         
-        profJpa.create(p1);
-        profJpa.create(p2);
-        
-        
-    }
-    
-    public static void populateUsuario(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
-        PopulateDB.populateUsuario(emf);
+        profJpa.create(prof1);
+        profJpa.create(prof2);
     }
     
     private static void populateUsuario(EntityManagerFactory emf){
@@ -193,7 +195,18 @@ public class PopulateDB {
         usuarioJpa.create(u1);
         usuarioJpa.create(u2);
         
-        Usuario u3 = usuarioJpa.findUsuario("bob");
+    }
+    
+    public static void populateUsuario(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        PopulateDB.populateUsuario(emf);
+    }
+    
+    public static void populateProfessores(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
+        PopulateDB.populateProfessores(emf);        
     }
     
 }
+
+

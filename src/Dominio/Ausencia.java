@@ -38,12 +38,15 @@ public class Ausencia implements Serializable {
     
     private EstadoAusencia estado;
     
+    private String codigo;
+    
     //blame Hibernate
     protected Ausencia(){
     
     }
 
-    public Ausencia(Periodo periodo, Professor professor, String motivo) {
+    public Ausencia(String codigo, Periodo periodo, Professor professor, String motivo) {
+        this.codigo = codigo;
         this.periodo = periodo;
         this.professor = professor;
         this.motivo = motivo;
@@ -134,6 +137,13 @@ public class Ausencia implements Serializable {
             throw new IllegalStateException("O professor substituto não deve ser o mesmo que o professor se ausentando.");
         }
         this.indicacaoSubstituto = professor;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
     }
     
 }
