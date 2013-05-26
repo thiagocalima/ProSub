@@ -19,4 +19,23 @@ public class AusenciaModel {
     public Calendar dataFim;
     public EstadoAusencia estado;
     public Long id;
+    
+    public String toStringProfessorAusente(){
+        return ""+professorAusente+"";
+    }
+    public String toStringProfessorSubstituto() {
+        return ""+professorSubstituto+"";
+    }
+    public String toStringDataInicio() {
+        return ""+dataInicio+"";
+    }
+    public String toStringDataFim() {
+        return ""+dataFim+"";
+    }
+    public String toStringEstado() {
+        return ""+estado+"";
+    }
+    public String toStringId() {
+        return ""+id+"";
+    }
 }
