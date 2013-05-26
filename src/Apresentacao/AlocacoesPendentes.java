@@ -25,11 +25,18 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
     }
 
-    public AlocacoesPendentes(JFrame previous) {
+    public AlocacoesPendentes(JFrame previous, boolean isPending) {
         initComponents();
         previousFrame = previous;
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        
+        if (isPending) {
+            btn_RejeitarAlocacao.setEnabled(false);
+        } else {
+            btn_CancelarAusencia.setEnabled(false);
+            btn_CancelarAulas.setEnabled(false);
+        }
     }
     
     /**
