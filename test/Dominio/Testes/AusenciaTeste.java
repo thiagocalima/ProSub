@@ -46,7 +46,7 @@ public class AusenciaTeste {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void testeDeveSerInicializadoComPeriodoProfessorMotivoESemProfessorSubstituto() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException {
+    public void testeDeveSerInicializadoComPeriodoProfessorMotivoESemProfessorSubstituto() {
         Assert.assertEquals(ausencia.getPeriodo(), periodo);
         Assert.assertEquals(ausencia.getProfessor(), professor);
         Assert.assertEquals(ausencia.getMotivo(), motivo);

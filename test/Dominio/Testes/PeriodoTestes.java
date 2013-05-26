@@ -5,8 +5,12 @@
 package Dominio.Testes;
 
 import Dominio.Periodo;
+import Dominio.AulaComparator;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
@@ -70,5 +74,7 @@ public class PeriodoTestes {
         
         Periodo outro = new Periodo(limiteInf, limiteSup);
     }
+    
+
         
 }

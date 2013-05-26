@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -17,33 +16,26 @@ import javax.persistence.OneToOne;
  * @author Leticia
  */
 @Entity
-public class Ausencia implements Serializable {
+public class Aula implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @ManyToOne
-    private Professor professor;
-    
     @OneToOne
     private Periodo periodo;
     
-    private String motivo;
+    private int diaDaSemana;
     
-    @ManyToOne
-    private Professor indicacaoSubstituto;
-    
-    //blame Hibernate
-    protected Ausencia(){
-    
+    protected Aula(){
+        
     }
 
-    public Ausencia(Periodo periodo, Professor professor, String motivo) {
+    public Aula(int diaDaSemana, Periodo periodo) {
+        
         this.periodo = periodo;
-        this.professor = professor;
-        this.motivo = motivo;
-        this.indicacaoSubstituto = null;
+        this.diaDaSemana = diaDaSemana;
+        
     }
 
     public Long getId() {
@@ -64,10 +56,10 @@ public class Ausencia implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ausencia)) {
+        if (!(object instanceof Aula)) {
             return false;
         }
-        Ausencia other = (Ausencia) object;
+        Aula other = (Aula) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -76,34 +68,36 @@ public class Ausencia implements Serializable {
 
     @Override
     public String toString() {
-        return "Dominio.Ausencia[ id=" + id + " ]";
+        return "Dominio.Aula[ id=" + id + " ]";
     }
 
-    public Professor getProfessor() {
-        return professor;
-    }
-
+    /**
+     * @return the periodo
+     */
     public Periodo getPeriodo() {
         return periodo;
     }
 
-    public Object getMotivo() {
-        return motivo;
-    }
-
     /**
-     * @return the indicacaoSubstituto
+     * @return the diaDaSemana
      */
-    public Professor getIndicacaoSubstituto() {
-        return indicacaoSubstituto;
+    public int getDiaDaSemana() {
+        return diaDaSemana;
     }
 
-    public void indicarSubstituto(Professor professor) {
+    public boolean bateCom(Aula aula2) {
         
-        if (professor == this.professor){
-            throw new IllegalStateException("O professor substituto não deve ser o mesmo que o professor se ausentando.");
-        }
-        this.indicacaoSubstituto = professor;
+        Periodo p1 = this.getPeriodo();
+        Periodo p2 = aula2.getPeriodo();
+        
+        if((p1.getLimiteSuperior().after(p2.getLimiteInferior()) && p1.getLimiteSuperior().before(p2.getLimiteSuperior()))  ||    
+                ( p1.getLimiteInferior().after(p2.getLimiteInferior()) && p1.getLimiteInferior().before(p2.getLimiteSuperior())  )
+          ){
+            return true;  
+          }
+        
+        return false;
+
     }
     
 }
