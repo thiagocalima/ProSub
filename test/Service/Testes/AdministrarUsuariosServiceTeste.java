@@ -8,7 +8,9 @@ import DataMapper.PopulateDB;
 import DataMapper.UsuarioJpaController;
 import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Usuario;
+import Modelos.UsuarioModel;
 import Service.AdministrarUsuariosService;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -47,8 +49,6 @@ public class AdministrarUsuariosServiceTeste {
     public static void classSetUp(){
         PopulateDB.recreateDB();
         PopulateDB.populateUsuario();
-        
-        
     }
     
     @AfterClass
@@ -61,13 +61,15 @@ public class AdministrarUsuariosServiceTeste {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void testeDeveSalvarUsuario() {
+    public void testeDeveSalvarUsuario() throws NonexistentEntityException {
         
         serviceEmTeste.SalvarUsuario("Victor hugo", "senhaDificil", 1);
 
         Usuario usuarioQueEuColoquei = controller.findUsuario(proximoId);
         
         Assert.assertNotNull(usuarioQueEuColoquei);
+        
+        controller.destroy(proximoId);
         
     }
     
@@ -86,6 +88,10 @@ public class AdministrarUsuariosServiceTeste {
     
     @Test
     public void testeDeveListarTodosOsUsuarios(){
+        
+        List<UsuarioModel> modelos = serviceEmTeste.ListarUsuarios();
+        Assert.assertEquals(2, modelos.size());
+        
         
     }
 }

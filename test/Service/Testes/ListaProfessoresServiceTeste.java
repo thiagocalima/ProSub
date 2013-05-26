@@ -52,7 +52,5 @@ public class ListaProfessoresServiceTeste {
         Assert.assertEquals(professores.size(), modelos.size());
         Assert.assertEquals("Calebe", modelos.get(0).Nome);
         Assert.assertEquals("Ana Claudia", modelos.get(1).Nome);
-        
-        
     }
 }

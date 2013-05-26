@@ -13,29 +13,12 @@ import java.util.Calendar;
  * @author Thiago
  */
 public class AusenciaModel {
-    public Professor professorAusente;
-    public Professor professorSubstituto;
-    public Calendar dataInicio;
-    public Calendar dataFim;
-    public EstadoAusencia estado;
+    public String professorAusente;
+    public String professorSubstituto;
+    public String dataInicio;
+    public String dataFim;
+    public String estado;
+    public String codigo;
     public Long id;
     
-    public String toStringProfessorAusente(){
-        return ""+professorAusente+"";
-    }
-    public String toStringProfessorSubstituto() {
-        return ""+professorSubstituto+"";
-    }
-    public String toStringDataInicio() {
-        return ""+dataInicio+"";
-    }
-    public String toStringDataFim() {
-        return ""+dataFim+"";
-    }
-    public String toStringEstado() {
-        return ""+estado+"";
-    }
-    public String toStringId() {
-        return ""+id+"";
-    }
 }

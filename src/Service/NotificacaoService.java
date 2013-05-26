@@ -10,11 +10,15 @@ import DataMapper.ProfessorJpaController;
 import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Aula;
 import Dominio.Ausencia;
+import Dominio.EstadoAusencia;
 import Dominio.Periodo;
 import Dominio.Professor;
+import Modelos.AusenciaModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -66,14 +70,69 @@ public class NotificacaoService {
         return codigo;
         
     }
+
+    public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
+        
+        Calendar inicio = Calendar.getInstance();
+        Calendar fim = Calendar.getInstance();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        inicio.setTime(sdf.parse(dataInicio));
+        fim.setTime(sdf.parse(dataFim));
+        
+        Periodo periodo = new Periodo(inicio, fim);
+        
+        periodoController.create(periodo);
+
+        Professor professorSubstituto = profController.findProfessor(idSubstituto);
+        
+        Random r = new Random();
+        
+        Ausencia ausencia = ausenciaController.findAusencia(codigo);
+        ausencia.setPeriodo(periodo);
+        ausencia.setMotivo(motivo);
+        ausencia.indicarSubstituto(professorSubstituto);
+                
+        ausenciaController.edit(ausencia);
+    }
+
+    public List<AusenciaModel> listarAusencias() {
+        
+        List<Ausencia> ausencias = ausenciaController.findAusenciaEntities();
+        List<AusenciaModel> modelos = new LinkedList<AusenciaModel>();
+        
+        for(Ausencia ausencia : ausencias){
+            
+            AusenciaModel modelo = new AusenciaModel();
+            
+            modelo.codigo = ausencia.getCodigo();
+            modelo.professorAusente = ausencia.getProfessor().getNome();
+            modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
+            modelo.estado = this.determinarEstado(ausencia.getEstado());
+            modelo.id = ausencia.getId();
+            Periodo p = ausencia.getPeriodo();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            modelo.dataInicio = sdf.format(p.getLimiteInferior().getTime());
+            modelo.dataInicio = sdf.format(p.getLimiteSuperior().getTime());
+            
+            modelos.add(modelo);
+        }
+        
+        return modelos;
+    }
     
-//    public void EditarNotificacao(Professor professorAusente, Professor professorSubstituto, Calendar dataInicio, Calendar dataFim, Aula aulaInicio, Aula aulaFim, String motivo, Long id) throws NonexistentEntityException, Exception {
-//        periodo = new Periodo(dataInicio, dataFim);
-//        ausencia = new Ausencia(periodo, professorAusente, motivo);
-//        
-//        ausencia.setId(id);
-//        
-//        ausenciaJpaController.edit(ausencia);
-//    }
+    private String determinarEstado(EstadoAusencia estado){
+        if(estado == EstadoAusencia.Alocacao_Cancelada)
+            return "Alocação cancelada";
+        else if(estado == EstadoAusencia.Alocacao_Efetuada)
+            return "Alocação efetuada";
+        else if(estado == EstadoAusencia.Alocacao_Pendente)
+            return "Alocação pendente";
+        else{
+            return "Aulas canceladas";
+        }
+    }
+    
 
 }

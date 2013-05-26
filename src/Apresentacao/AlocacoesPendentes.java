@@ -3,6 +3,7 @@ package Apresentacao;
 import Dominio.EstadoAusencia;
 import Modelos.AusenciaModel;
 import Service.ListaAlocacoesPendentesService;
+import Service.NotificacaoService;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
@@ -38,33 +39,33 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         
         if (isPending) {
             btn_RejeitarAlocacao.setEnabled(false);
-            ListaAlocacoesPendentesService listaAlocacoesPendentes = new ListaAlocacoesPendentesService();
-            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            NotificacaoService listaAlocacoesPendentes = new NotificacaoService();
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusencias();
             for (AusenciaModel model : listaAusencias) {
-                if (model.estado == EstadoAusencia.Alocacao_Pendente) {
+                if (model.estado.equals("Alocação pendente")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-                    tableModel.addRow(new Object[]{model.toStringId(),
-                                                    model.toStringProfessorAusente(),
-                                                    model.toStringDataInicio(),
-                                                    model.toStringDataFim(),
-                                                    model.toStringProfessorSubstituto(),
-                                                    model.toStringEstado()});
+                    tableModel.addRow(new Object[]{model.codigo,
+                                                    model.professorAusente,
+                                                    model.dataInicio,
+                                                    model.dataFim,
+                                                    model.professorSubstituto,
+                                                    model.estado});
                 }
             }
         } else {
             btn_CancelarAusencia.setEnabled(false);
             btn_CancelarAulas.setEnabled(false);
-            ListaAlocacoesPendentesService listaAlocacoesPendentes =  new ListaAlocacoesPendentesService();;
-            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            NotificacaoService listaAlocacoesPendentes =  new NotificacaoService();;
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.listarAusencias();
             for (AusenciaModel model : listaAusencias) {
-                if (model.estado == EstadoAusencia.Alocacao_Efetuada) {
+                if (model.estado.equals("Alocação efetuada")) {
                     DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
-                    tableModel.addRow(new Object[]{model.toStringId(),
-                                                    model.toStringProfessorAusente(),
-                                                    model.toStringDataInicio(),
-                                                    model.toStringDataFim(),
-                                                    model.toStringProfessorSubstituto(),
-                                                    model.toStringEstado()});
+                    tableModel.addRow(new Object[]{model.codigo,
+                                                    model.professorAusente,
+                                                    model.dataInicio,
+                                                    model.dataFim,
+                                                    model.professorSubstituto,
+                                                    model.estado});
                 }
             }
         }

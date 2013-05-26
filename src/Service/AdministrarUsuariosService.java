@@ -64,10 +64,22 @@ public class AdministrarUsuariosService {
         }
         return modelos;   
     }
-
-
-
-
-
+    
+    public UsuarioModel obterUsuario(String nome){
+        
+        UsuarioJpaController controller = new UsuarioJpaController(emf);
+        
+        Usuario usuario = controller.findUsuario(nome);
+        
+        UsuarioModel model = new UsuarioModel();
+        model.Usuario = usuario.getUsuario();
+        model.Senha = usuario.getSenha();
+        model.profile = usuario.getPermissao();
+        model.id = usuario.getId();
+        
+        return model;
+        
+    }
+    
     
 }

@@ -116,6 +116,16 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Usuario findUsuario(String nome){
+    List<Usuario> usuarios = this.findUsuarioEntities();
+    for(Usuario usuario : usuarios){
+        if(usuario.getUsuario().equals(nome))
+            return usuario;
+    }
+
+    return null;
+    }
 
     public int getUsuarioCount() {
         EntityManager em = getEntityManager();

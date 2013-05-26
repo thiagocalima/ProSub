@@ -19,12 +19,7 @@ import javax.persistence.Persistence;
 public class PopulateDB {
     
     public static void main (String[]args){
-        
-        dropDB("prosub", "root", "root");
-        createDB("prosub", "root", "root");
-        populateDB();
-        
-        
+        PopulateDB.fullSetupDB();
     }
     
     public static void fullSetupDB(){
