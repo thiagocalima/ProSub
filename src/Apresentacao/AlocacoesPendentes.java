@@ -38,7 +38,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         
         if (isPending) {
             btn_RejeitarAlocacao.setEnabled(false);
-            ListaAlocacoesPendentesService listaAlocacoesPendentes = null;
+            ListaAlocacoesPendentesService listaAlocacoesPendentes = new ListaAlocacoesPendentesService();
             List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
             for (AusenciaModel model : listaAusencias) {
                 if (model.estado == EstadoAusencia.Alocacao_Pendente) {
@@ -54,7 +54,7 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         } else {
             btn_CancelarAusencia.setEnabled(false);
             btn_CancelarAulas.setEnabled(false);
-            ListaAlocacoesPendentesService listaAlocacoesPendentes = null;
+            ListaAlocacoesPendentesService listaAlocacoesPendentes =  new ListaAlocacoesPendentesService();;
             List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
             for (AusenciaModel model : listaAusencias) {
                 if (model.estado == EstadoAusencia.Alocacao_Efetuada) {
