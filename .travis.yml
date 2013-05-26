@@ -2,7 +2,16 @@ language: java
 jdk:
   - oraclejdk7
 
-before-install:
+before_script:
+  - mysql -e 'create database prosub;
+
+before_install:
+ - sudo apt-get update
+ - sudo apt-get install libeclipselink-java
+ - sudo apt-get install glassfish-*
+ - sudo apt-get install netbeans
+ - sudo apt-get install mysql-server mysql-client
+ - sudo apt-get install openjdk-7-jre
  - sudo apt-get install 7zip
  - sudo cd /root/ && wget http://www.java2s.com/Code/JarDownload/javax/javax.persistence.jar.zip
  - sudo 7zip e /root/javax.persistence.jar.zip
