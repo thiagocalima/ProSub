@@ -3,6 +3,8 @@ jdk:
   - oraclejdk7
 
 before-install:
- - sudo apt-get 7zip
+ - sudo apt-get install 7zip
  - sudo cd /root/ && wget http://www.java2s.com/Code/JarDownload/javax/javax.persistence.jar.zip
  - sudo 7zip e /root/javax.persistence.jar.zip
+
+deps-jar: /root/javax.persistence.jar
