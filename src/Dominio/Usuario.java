@@ -24,7 +24,6 @@ public class Usuario implements Serializable {
     private int profile;
     private String Usuario;
     private String Senha;
-    private char[] SenhaCripto;
 
     public Usuario() {
     }
@@ -72,9 +71,6 @@ public class Usuario implements Serializable {
         this.Senha = Senha;
     }
     
-    public void setSenha(char[] senha) {
-        this.SenhaCripto = senha;
-    }
     
     public void setPermissao(int profile){
         this.profile = profile;

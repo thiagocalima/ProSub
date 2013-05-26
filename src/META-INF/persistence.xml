@@ -3,6 +3,11 @@
   <persistence-unit name="ProSubPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Dominio.NewEntity</class>
+    <class>Dominio.Professor</class>
+    <class>Dominio.Usuario</class>
+    <class>Dominio.Periodo</class>
+    <class>Dominio.Aula</class>
+    <class>Dominio.Ausencia</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prosub?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
