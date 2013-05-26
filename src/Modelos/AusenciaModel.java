@@ -4,7 +4,9 @@
  */
 package Modelos;
 
+import Dominio.EstadoAusencia;
 import Dominio.Professor;
+import java.util.Calendar;
 
 /**
  *
@@ -12,5 +14,9 @@ import Dominio.Professor;
  */
 public class AusenciaModel {
     public Professor professorAusente;
+    public Professor professorSubstituto;
+    public Calendar dataInicio;
+    public Calendar dataFim;
+    public EstadoAusencia estado;
     public Long id;
 }
