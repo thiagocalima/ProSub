@@ -11,3 +11,5 @@ before_install:
  - sudo apt-get install glassfish-*
  - sudo apt-get install netbeans
  - sudo apt-get install mysql-server mysql-client
+
+install: ant deps
