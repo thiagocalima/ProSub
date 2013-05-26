@@ -5,6 +5,7 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -106,19 +107,66 @@ public class Professor implements Serializable {
         
         Collections.sort(this.grade, new AulaComparator());
         
-        boolean ehCompativel = false;
-        boolean ehIncompativel = false;
-        //int itAulas = 0;
+        boolean ehCompativel = true;
 
-        while(!ehCompativel || !ehIncompativel){
+        for(Aula aulaIntruso : aulas){
+            for(Aula minhaAula : this.getGrade()) {
+                if(minhaAula.bateCom(aulaIntruso) || aulaIntruso.bateCom(minhaAula) ){
+                    ehCompativel = false;
+                    break;
+                }
+            } 
+        }
+        return ehCompativel;
+
+    }
+
+    public List<Aula> verificarAulasPerdidasNoPeriodo(Periodo periodoAusencia) {
+        
+        int diasEntre = this.diasEntre(periodoAusencia);
+        
+        Calendar data = periodoAusencia.getLimiteInferior();
+        List<Aula> aulasComprometidas = new LinkedList<Aula>();
+        
+        while(data.before(periodoAusencia.getLimiteSuperior())){
             
+            for(Aula aula : this.grade){
+                if(data.get(Calendar.DAY_OF_WEEK) == aula.getDiaDaSemana()){
+                    aulasComprometidas.add(aula);
+                }
+            }
             
+            data.add(Calendar.DAY_OF_MONTH, 1);
             
+            if(aulasComprometidas.size() == this.grade.size()){
+                break;
+            }   
         }
         
-        return true;
+        return aulasComprometidas;
+    }
+   
+    private int diasEntre(Periodo periodo){
         
+        Calendar comeco = periodo.getLimiteInferior();
+        Calendar fim = periodo.getLimiteSuperior();
         
+        Calendar data = (Calendar)comeco.clone();
+        
+        int diasEntre = 0;
+        
+        if(comeco.equals(fim)){
+            diasEntre = 2; //Contando os extremos
+        }else{
+            diasEntre = 1;
+        }
+        
+        while(data.before(fim)){
+            data.add(Calendar.DAY_OF_MONTH, 1);
+            diasEntre++;
+        }
+        
+        return diasEntre;
     }
     
 }

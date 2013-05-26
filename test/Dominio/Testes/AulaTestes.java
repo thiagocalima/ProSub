@@ -47,7 +47,7 @@ public class AulaTestes {
         limiteInfP1.set(0, 0, 0, 20, 0);
         limiteSupP1.set(0, 0, 0, 20, 50);
         
-        periodo = new Periodo(limiteInfP1, limiteSupP2);
+        periodo = new Periodo(limiteInfP1, limiteSupP1);
         //EasyMock.expect(periodo.getLimiteInferior()).andReturn(limiteInfP1);
         //EasyMock.expect(periodo.getLimiteSuperior()).andReturn(limiteSupP1);
         
@@ -143,6 +143,8 @@ public class AulaTestes {
         Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
         
         Assert.assertTrue(objetoEmTeste.bateCom(aula2));
+        
+        
 
     }
 }

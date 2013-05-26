@@ -29,8 +29,7 @@ public class Periodo implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar limiteSuperior;
     
-    protected Periodo(){
-        
+    protected Periodo(){   
     }
 
     public Periodo(Calendar limiteInf, Calendar limiteSup) {
@@ -54,21 +53,31 @@ public class Periodo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+//        hash += (id != null ? id.hashCode() : 0);
+        hash += this.limiteInferior.hashCode() + this.limiteSuperior.hashCode();
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Periodo)) {
-            return false;
-        }
+//        // TODO: Warning - this method won't work in the case the id fields are not set
+//        if (!(object instanceof Periodo)) {
+//            return false;
+//        }
+//        Periodo other = (Periodo) object;
+//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+//            return false;
+//        }
+//        return true;
+        
         Periodo other = (Periodo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        
+        if(this.limiteInferior.equals(other.limiteInferior) && this.limiteSuperior.equals(other.limiteSuperior)){
+            return true;
+        }else{
             return false;
         }
-        return true;
+        
     }
 
     @Override
@@ -89,7 +98,4 @@ public class Periodo implements Serializable {
     public Calendar getLimiteSuperior() {
         return limiteSuperior;
     }
-
-
-    
 }

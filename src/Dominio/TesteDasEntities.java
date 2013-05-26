@@ -11,6 +11,7 @@ import java.util.Calendar;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+
 /**
  *
  * @author Leticia
@@ -18,6 +19,10 @@ import javax.persistence.Persistence;
 public class TesteDasEntities {
     
     public static void main (String[] args){
+        
+        Calendar calendar = Calendar.getInstance();
+        
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
         
         
         
