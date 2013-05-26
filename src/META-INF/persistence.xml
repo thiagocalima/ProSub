@@ -5,6 +5,7 @@
     <class>Dominio.Ausencia</class>
     <class>Dominio.Professor</class>
     <class>Dominio.Periodo</class>
+    <class>Dominio.Usuario</class>
     <properties>
       <property name="hibernate.connection.username" value="root"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

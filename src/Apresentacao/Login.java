@@ -1,5 +1,6 @@
 package Apresentacao;
 
+import Service.LoginService;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 /*
@@ -135,8 +136,14 @@ public class Login extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha em branco!", "Login", JOptionPane.INFORMATION_MESSAGE);
     		} else {
                     this.dispose();
-                    MainMenu mainMenu = new MainMenu();
-                    mainMenu.setVisible(true);
+                    String str = new String(senha);
+                    LoginService LgnService = null;
+                    if (!LgnService.VerificarUsuarioESenha(usuario, str)){
+                        JOptionPane.showMessageDialog(null, "Usuário e Senha Inválidos!", "Login", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                       MainMenu mainMenu = new MainMenu();
+                       mainMenu.setVisible(true);
+                    }
     		}
     	} catch (Exception e) {
     		System.out.println("Problemas no Login!");

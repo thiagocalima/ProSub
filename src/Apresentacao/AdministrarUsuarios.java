@@ -1,6 +1,10 @@
 package Apresentacao;
 
+import DataMapper.exceptions.NonexistentEntityException;
+import Service.AdministrarUsuariosService;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /*
@@ -15,6 +19,7 @@ import javax.swing.JFrame;
 public class AdministrarUsuarios extends javax.swing.JFrame {
 
     private JFrame previousFrame;
+    private AdministrarUsuariosService aum;
     
     /**
      * Creates new form AdministrarUsuarios
@@ -64,9 +69,10 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         txt_Confirme = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        jToggleButton3 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Adminsitrar Usuários");
+        setTitle("Administrar Usuários");
 
         jLabel1.setText("Ação:");
 
@@ -93,7 +99,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
 
         jLabel5.setText("Perfil:");
 
-        cmb_Perfil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Funcionário", "Professor PPI", "Professor PPP", "Professor PPA" }));
+        cmb_Perfil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Funcionário", "Professor" }));
         cmb_Perfil.setToolTipText("Selecione o perfil.");
         cmb_Perfil.setMinimumSize(new java.awt.Dimension(70, 20));
         cmb_Perfil.setPreferredSize(new java.awt.Dimension(70, 20));
@@ -105,8 +111,13 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         cmb_Janela.setMinimumSize(new java.awt.Dimension(70, 20));
         cmb_Janela.setPreferredSize(new java.awt.Dimension(70, 20));
 
-        cmb_Nome.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Item 2", "Item 3", "Item 4" }));
         cmb_Nome.setToolTipText("Selecione o Usuário.");
+        cmb_Nome.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cmb_Nome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_NomeActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setText("Cancelar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +127,11 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         });
 
         jToggleButton2.setText("Salvar");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         txt_Nome.setToolTipText("Digite o nome do usuário");
         txt_Nome.setEnabled(false);
@@ -130,6 +146,13 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         txt_Confirme.setMinimumSize(new java.awt.Dimension(70, 20));
         txt_Confirme.setPreferredSize(new java.awt.Dimension(70, 20));
 
+        jToggleButton3.setText("Editar");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,6 +165,8 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jToggleButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jToggleButton3)
+                        .addGap(18, 18, 18)
                         .addComponent(jToggleButton2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -213,7 +238,9 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton2)
-                    .addComponent(jToggleButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jToggleButton1)
+                        .addComponent(jToggleButton3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -223,11 +250,15 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private void rbtn_EditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_EditarUsuarioActionPerformed
         txt_Nome.setEnabled(false);
         cmb_Nome.setEnabled(true);
+        jToggleButton2.setEnabled(false);
+        jToggleButton3.setEnabled(true);
     }//GEN-LAST:event_rbtn_EditarUsuarioActionPerformed
 
     private void rbtn_CriarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_CriarUsuarioActionPerformed
         cmb_Nome.setEnabled(false);
         txt_Nome.setEnabled(true);
+        jToggleButton2.setEnabled(true);
+        jToggleButton3.setEnabled(false);
     }//GEN-LAST:event_rbtn_CriarUsuarioActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -238,6 +269,26 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
             System.out.println("Erro ao retornar para janela anterior!");
         }       
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex());
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        //Remember: colocar no ultimo parametros o ID recuperado do banco de dados
+        long id = 0;
+        try {
+            aum.EditarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex(), id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void cmb_NomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_NomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_NomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +324,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
             }
         });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btnGroup_Acao;
     private javax.swing.JComboBox cmb_Janela;
@@ -288,6 +340,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JRadioButton rbtn_CriarUsuario;
     private javax.swing.JRadioButton rbtn_EditarUsuario;
     private javax.swing.JTextField txt_Confirme;
