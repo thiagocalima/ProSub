@@ -4,7 +4,7 @@ jdk:
 
 before-install:
  - sudo apt-get 7zip
- - sudo wget http://www.java2s.com/Code/JarDownload/javax/javax.persistence.jar.zip ~
- - sudo 7zip e ~/javax.*.zip
+ - sudo cd /root/ && wget http://www.java2s.com/Code/JarDownload/javax/javax.persistence.jar.zip
+ - sudo 7zip e /root/javax.persistence.jar.zip
 
-deps-jar: ~/javax.*.jar
+deps-jar: /root/javax.persistence.jar
