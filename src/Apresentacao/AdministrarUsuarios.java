@@ -1,8 +1,11 @@
 package Apresentacao;
 
 import DataMapper.exceptions.NonexistentEntityException;
+import Modelos.UsuarioModel;
 import Service.AdministrarUsuariosService;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -30,6 +33,8 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         btnGroup_Acao.add(rbtn_CriarUsuario);
         btnGroup_Acao.add(rbtn_EditarUsuario);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        
+
     }
     
     public AdministrarUsuarios(JFrame previous) {
@@ -39,6 +44,16 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         btnGroup_Acao.add(rbtn_CriarUsuario);
         btnGroup_Acao.add(rbtn_EditarUsuario);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        
+        aum = new AdministrarUsuariosService();
+        List<UsuarioModel> usuarios = aum.ListarUsuarios();
+        List<String> listaDeUsuarios = new ArrayList<String>();
+        
+        cmb_Nome.addItem("Selecione um usuário");
+        
+        for(UsuarioModel modelo : usuarios){
+             cmb_Nome.addItem(modelo.Usuario);
+        }
     }
 
     /**
@@ -252,6 +267,19 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         cmb_Nome.setEnabled(true);
         jToggleButton2.setEnabled(false);
         jToggleButton3.setEnabled(true);
+        
+        cmb_Nome.removeAllItems();
+        
+        aum = new AdministrarUsuariosService(); 
+        
+        List<UsuarioModel> usuarios = aum.ListarUsuarios();
+        List<String> listaDeUsuarios = new ArrayList<String>();
+        
+        cmb_Nome.addItem("Selecione um usuário");
+        
+        for(UsuarioModel modelo : usuarios){
+             cmb_Nome.addItem(modelo.Usuario);
+        }
     }//GEN-LAST:event_rbtn_EditarUsuarioActionPerformed
 
     private void rbtn_CriarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_CriarUsuarioActionPerformed
@@ -271,7 +299,24 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex());
+        
+        aum = new AdministrarUsuariosService();
+        
+        if(rbtn_EditarUsuario.isSelected()){
+            try {
+                
+                UsuarioModel model = aum.obterUsuario(txt_Nome.getText());
+                
+                aum.EditarUsuario(txt_Senha.getText(), cmb_Perfil.getSelectedIndex(), model.id);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(AdministrarUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            aum.SalvarUsuario(txt_Nome.getText(),txt_Senha.getText(),cmb_Perfil.getSelectedIndex());
+        }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
@@ -287,7 +332,23 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     private void cmb_NomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_NomeActionPerformed
-        // TODO add your handling code here:
+
+        if(cmb_Nome.getSelectedIndex() != 0){
+            String usuario = (String)cmb_Nome.getSelectedItem();
+        
+            aum = new AdministrarUsuariosService();
+
+            UsuarioModel modelo = aum.obterUsuario(usuario);
+
+            txt_Nome.setText(modelo.Usuario);
+            txt_Senha.setText(modelo.Senha);
+            txt_Confirme.setText(modelo.Senha);
+
+            cmb_Perfil.setSelectedIndex(modelo.profile);
+        }
+        
+
+        
     }//GEN-LAST:event_cmb_NomeActionPerformed
 
     /**
@@ -316,6 +377,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
