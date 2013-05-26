@@ -34,6 +34,8 @@ public class Ausencia implements Serializable {
     @ManyToOne
     private Professor indicacaoSubstituto;
     
+    private EstadoAusencia estado;
+    
     //blame Hibernate
     protected Ausencia(){
     
@@ -44,6 +46,7 @@ public class Ausencia implements Serializable {
         this.professor = professor;
         this.motivo = motivo;
         this.indicacaoSubstituto = null;
+        this.estado = EstadoAusencia.Alocacao_Pendente;
     }
 
     public Long getId() {
@@ -82,15 +85,31 @@ public class Ausencia implements Serializable {
     public Professor getProfessor() {
         return professor;
     }
+    
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
 
     public Periodo getPeriodo() {
         return periodo;
+    }
+    
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
 
     public Object getMotivo() {
         return motivo;
     }
+    
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 
+    public EstadoAusencia getEstado() {
+        return this.estado;
+    }
+    
     /**
      * @return the indicacaoSubstituto
      */

@@ -6,6 +6,7 @@ package Dominio.Testes;
  */
 
 import Dominio.Ausencia;
+import Dominio.EstadoAusencia;
 import Dominio.Periodo;
 import Dominio.Professor;
 import java.lang.reflect.Field;
@@ -26,6 +27,7 @@ public class AusenciaTeste {
     private Periodo periodo;
     private Ausencia ausencia;
     private String motivo;
+    private EstadoAusencia estado;
     
     public AusenciaTeste() {
     }
@@ -37,6 +39,7 @@ public class AusenciaTeste {
         professorSubstituto = EasyMock.createMock(Professor.class);
         motivo = "Congresso internacional";
         ausencia = new Ausencia(periodo, professor, motivo);
+        estado = EstadoAusencia.Alocacao_Pendente;
     }
     
     @After
@@ -51,6 +54,7 @@ public class AusenciaTeste {
         Assert.assertEquals(ausencia.getProfessor(), professor);
         Assert.assertEquals(ausencia.getMotivo(), motivo);
         Assert.assertEquals(ausencia.getIndicacaoSubstituto(), null);
+        Assert.assertEquals(ausencia.getEstado(), estado);
     }
     
     @Test
