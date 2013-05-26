@@ -31,6 +31,8 @@ public class Ausencia implements Serializable {
     
     private String motivo;
     
+    private String motivoRejeicao;
+    
     @ManyToOne
     private Professor indicacaoSubstituto;
     
@@ -45,6 +47,7 @@ public class Ausencia implements Serializable {
         this.periodo = periodo;
         this.professor = professor;
         this.motivo = motivo;
+        this.motivoRejeicao = null;
         this.indicacaoSubstituto = null;
         this.estado = EstadoAusencia.Alocacao_Pendente;
     }
@@ -105,7 +108,15 @@ public class Ausencia implements Serializable {
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
+    
+    public String getMotivoRejeicao() {
+        return motivoRejeicao;
+    }
 
+    public void setMotivoRejeicao(String motivo) {
+        this.motivoRejeicao = motivo;
+    }
+    
     public EstadoAusencia getEstado() {
         return this.estado;
     }

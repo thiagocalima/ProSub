@@ -135,7 +135,6 @@ public class Login extends javax.swing.JFrame {
     		if ((usuario.equals("")) || (senha.length == 0)) {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha em branco!", "Login", JOptionPane.INFORMATION_MESSAGE);
     		} else {
-                    this.dispose();
                     String str = new String(senha);
                     LoginService LgnService = new LoginService();
                     if (!LgnService.VerificarUsuarioESenha(usuario, str)){
@@ -143,6 +142,7 @@ public class Login extends javax.swing.JFrame {
                     } else {
                        MainMenu mainMenu = new MainMenu();
                        mainMenu.setVisible(true);
+                       this.dispose();
                     }
     		}
     	} catch (Exception e) {

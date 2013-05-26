@@ -149,11 +149,11 @@ public class MainMenu extends javax.swing.JFrame {
     private void btn_ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConfirmarActionPerformed
         if (rbtn_AlocacoesConfirmadas.isSelected()) {
             this.setVisible(false);
-            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this);
+            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, false);
             alocacoesPendentes.setVisible(true);
         } else if (rbtn_AlocacoesPendentes.isSelected()) {
             this.setVisible(false);
-            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this);
+            AlocacoesPendentes alocacoesPendentes = new AlocacoesPendentes(this, true);
             alocacoesPendentes.setVisible(true);
         } else if (rbtn_CriarUsuarios.isSelected()){
             this.setVisible(false);

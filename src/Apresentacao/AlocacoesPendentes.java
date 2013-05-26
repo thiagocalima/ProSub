@@ -1,7 +1,12 @@
 package Apresentacao;
 
+import Dominio.EstadoAusencia;
+import Modelos.AusenciaModel;
+import Service.ListaAlocacoesPendentesService;
 import java.awt.Toolkit;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -25,11 +30,44 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
     }
 
-    public AlocacoesPendentes(JFrame previous) {
+    public AlocacoesPendentes(JFrame previous, boolean isPending) {
         initComponents();
         previousFrame = previous;
         this.setLocationRelativeTo(null);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:/Users/Thiago/Documents/NetBeansProjects/ProSub/mack_icon.jpg"));
+        
+        if (isPending) {
+            btn_RejeitarAlocacao.setEnabled(false);
+            ListaAlocacoesPendentesService listaAlocacoesPendentes = new ListaAlocacoesPendentesService();
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            for (AusenciaModel model : listaAusencias) {
+                if (model.estado == EstadoAusencia.Alocacao_Pendente) {
+                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
+                    tableModel.addRow(new Object[]{model.toStringId(),
+                                                    model.toStringProfessorAusente(),
+                                                    model.toStringDataInicio(),
+                                                    model.toStringDataFim(),
+                                                    model.toStringProfessorSubstituto(),
+                                                    model.toStringEstado()});
+                }
+            }
+        } else {
+            btn_CancelarAusencia.setEnabled(false);
+            btn_CancelarAulas.setEnabled(false);
+            ListaAlocacoesPendentesService listaAlocacoesPendentes =  new ListaAlocacoesPendentesService();;
+            List<AusenciaModel> listaAusencias = listaAlocacoesPendentes.ListarAusencias();
+            for (AusenciaModel model : listaAusencias) {
+                if (model.estado == EstadoAusencia.Alocacao_Efetuada) {
+                    DefaultTableModel tableModel = (DefaultTableModel) tbl_Alocacoes.getModel();
+                    tableModel.addRow(new Object[]{model.toStringId(),
+                                                    model.toStringProfessorAusente(),
+                                                    model.toStringDataInicio(),
+                                                    model.toStringDataFim(),
+                                                    model.toStringProfessorSubstituto(),
+                                                    model.toStringEstado()});
+                }
+            }
+        }
     }
     
     /**
@@ -60,21 +98,27 @@ public class AlocacoesPendentes extends javax.swing.JFrame {
 
         tbl_Alocacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Professor", "Início", "Fim", "Substituto", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbl_Alocacoes);
 
         jLabel1.setText("Ações:");
