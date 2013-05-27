@@ -72,4 +72,7 @@
 
     -->
     
+    <property name="target" value="1.6"/>  
+    <property name="source" value="1.6"/>  
+    
 </project>
