@@ -88,7 +88,7 @@
               <include name="apps/**/classes"/>
               <exclude name="apps/**/*Test*"/>
           </dirset>
-          <filelist refid="third-party_jars"/>
+          <!-- <filelist refid="third-party_jars"/> -->
     </path>
     
     <javac srcdir="src" destdir="build" classpathref="class.path"/> 
