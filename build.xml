@@ -91,7 +91,7 @@
           <filelist refid="third-party_jars"/>
     </path>
     
-    <javac srcdir="${src}" destdir="${build}" classpathref="class.path"/>
-
+    <javac srcdir="src" destdir="build" classpathref="class.path"/> 
+    
 
 </project>
