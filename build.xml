@@ -71,11 +71,16 @@
     nbproject/build-impl.xml file. 
 
     -->
-<target name="compileAll">
-  <javac target="1.7" source="1.7">
-    <src path="\src\lib"/>
-  </javac>    
-</target>
+    <property name="src.dir" value="src"/>
+	<property name="build.dir" value="."/>
+    
+    <target name="Build" depends="Compile">
+		<jar destfile="eclipselink-2.3.2.jar.jar">
+			<fileset dir="." includes="**/*.class"/>
+		</jar>
+	</target>
+    
+    
     
     
 </project>
