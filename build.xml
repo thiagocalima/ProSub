@@ -72,11 +72,26 @@
 
     -->
     
+     <!--
     <property name="lib.dir" value="src\lib" />
     <path id="classPath">
         <pathelement location="${lib.dir}/eclipselink-2.3.2.jar" />
+    </path> -->
+    
+    <path id="class.path">
+         <pathelement path="${classpath}"/>
+          <fileset dir="src/lib">
+              <include name="**/*.jar"/>
+          </fileset>
+          <pathelement location="classes"/>
+          <dirset dir="${build.dir}">
+              <include name="apps/**/classes"/>
+              <exclude name="apps/**/*Test*"/>
+          </dirset>
+          <filelist refid="third-party_jars"/>
     </path>
     
-    
+    <javac srcdir="${src}" destdir="${build}" classpathref="class.path"/>
+
 
 </project>
