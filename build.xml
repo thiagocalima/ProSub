@@ -71,9 +71,4 @@
     nbproject/build-impl.xml file. 
 
     -->
-    
-    <classpath>
-      <pathelement path="${classpath}"/>
-      <pathelement location="src/lib"/>
-    </classpath>
 </project>
