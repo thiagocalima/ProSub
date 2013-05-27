@@ -81,7 +81,8 @@
     <path id="class.path">
          <pathelement path="${classpath}"/>
           <fileset dir="src/lib">
-              <include name="**/*.jar"/>
+              <!-- <include name="**/*.jar"/> -->
+              <include name="*.jar"/>
           </fileset>
           <pathelement location="classes"/>
           <!--<dirset dir="${build.dir}">-->
