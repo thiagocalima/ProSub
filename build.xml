@@ -72,5 +72,8 @@
 
     -->
     
-    <pathelement path="src/lib"/>
+    <classpath>
+      <pathelement path="${classpath}"/>
+      <pathelement location="src/lib"/>
+    </classpath>
 </project>
