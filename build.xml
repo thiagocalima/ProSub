@@ -83,7 +83,9 @@
          <pathelement location="src/lib/eclipselink-2.3.2.jar"/>
     </path> -->
     
-    <javac srcdir="src" destdir="build" classpathref="class.path" includeantruntime="false"> 
+    <!-- classpathref="class.path" -->
+    
+    <javac srcdir="src" destdir="build" includeantruntime="false"> 
         <classpath>
             <path id="eclipselink" location="src/lib/eclipselink-2.3.2.jar"/>
         </classpath>
