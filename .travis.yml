@@ -1,8 +1,8 @@
 language: java
 
 jdk:
-  - oraclejdk7
-  - openjdk7
+  - oraclejdk6
+  - openjdk6
 
 before_script:
   - mysql -e 'create database prosub;'
