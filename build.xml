@@ -72,7 +72,6 @@
 
     -->
     
-    <pathelement path="src\lib"/>
     <pathelement path="lib"/>
     <pathelement path="\lib"/>
     <pathelement path="\src\lib"/>
