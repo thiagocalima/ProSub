@@ -33,6 +33,7 @@ public class AulaTestes {
     Calendar limiteSupP1;
     Calendar limiteInfP2;
     Calendar limiteSupP2;
+    int teste;
     
     public AulaTestes() {
     }
