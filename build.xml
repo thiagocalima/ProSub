@@ -84,7 +84,8 @@
               <include name="**/*.jar"/>
           </fileset>
           <pathelement location="classes"/>
-          <dirset dir="${build.dir}">
+          <!--<dirset dir="${build.dir}">-->
+          <dirset dir="build">
               <include name="apps/**/classes"/>
               <exclude name="apps/**/*Test*"/>
           </dirset>
