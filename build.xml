@@ -73,6 +73,7 @@
     -->
     
     <property name="target" value="1.6"/>  
-    <property name="source" value="1.6"/>  
+    <property name="source" value="1.6"/>
+    <property name="bootclasspath" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar"/>
     
 </project>
