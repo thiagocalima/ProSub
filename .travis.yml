@@ -7,7 +7,7 @@ jdk:
 before_script:
   - mysql -e 'create database prosub;'
 
-before_install:
- - sudo apt-get update
- - sudo apt-get install eclipse
+# before_install:
+#  - sudo apt-get update
+#  - sudo apt-get install eclipse
 

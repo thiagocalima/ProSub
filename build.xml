@@ -71,5 +71,35 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+     <!--
+    <property name="lib.dir" value="src\lib" />
+    <path id="classPath">
+        <pathelement location="${lib.dir}/eclipselink-2.3.2.jar" />
+    </path> -->
+   <!-- 
+    <path id="class.path">
+         <pathelement path="${classpath}"/>
+         <pathelement location="src/lib/eclipselink-2.3.2.jar"/>
+    </path> -->
+    
+    <!-- classpathref="class.path" -->
+    
+    <javac srcdir="src" destdir="build" includeantruntime="false"> 
+        <classpath>
+            <!-- <path refid="eclipselink" location="src/lib/eclipselink-2.3.2.jar"/> 
+            <path id="jars_necessarios" location="src/lib"/> -->
+            <path id="class.path">
+                <pathelement path="${classpath}"/>
+                <pathelement location="src/lib/eclipselink-2.3.2.jar"/>
+                <pathelement location="src/lib"/>
+                <pathelement location="src"/>
+            </path>
+            
+        </classpath>
+            
+    </javac>
+    
+    
 
 </project>
