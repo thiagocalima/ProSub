@@ -71,16 +71,5 @@
     nbproject/build-impl.xml file. 
 
     -->
-    <property name="src.dir" value="src"/>
-	<property name="build.dir" value="."/>
-    
-    <target name="Build" depends="Compile">
-		<jar destfile="eclipselink-2.3.2.jar.jar">
-			<fileset dir="." includes="**/*.class"/>
-		</jar>
-	</target>
-    
-    
-    
     
 </project>
