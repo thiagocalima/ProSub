@@ -72,5 +72,5 @@
 
     -->
     
-    <pathelement path="\src\lib"/>
+    <pathelement path="src/lib"/>
 </project>
