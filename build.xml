@@ -71,4 +71,11 @@
     nbproject/build-impl.xml file. 
 
     -->
+<target name="compileAll">
+  <javac target="1.7" source="1.7">
+    <src path="\src\lib"/>
+  </javac>    
+</target>
+    
+    
 </project>
