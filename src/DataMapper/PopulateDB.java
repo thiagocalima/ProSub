@@ -19,19 +19,19 @@ import javax.persistence.Persistence;
 public class PopulateDB {
     
     public static void main (String[]args){
-        PopulateDB.fullSetupDB();
+        PopulateDB.fullSetupDB("prosub", "root", "root");
     }
     
-    public static void fullSetupDB(){
+    public static void fullSetupDB(String dbName, String user, String password){
                 
-        dropDB("prosub", "root", "root");
-        createDB("prosub", "root", "root");
+        dropDB(dbName, user, password);
+        createDB(dbName, user, password);
         populateDB();
     }
     
-    public static void recreateDB(){
-        dropDB("prosub", "root", "root");
-        createDB("prosub", "root", "root");
+    public static void recreateDB(String dbName, String user, String password){
+        dropDB(dbName, user, password);
+        createDB(dbName, user, password);
     }
     
     private static void dropDB(String dbName, String username, String password){

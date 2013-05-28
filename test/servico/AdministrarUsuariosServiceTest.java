@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Service.Testes;
+package servico;
 
 import DataMapper.PopulateDB;
 import DataMapper.UsuarioJpaController;
@@ -27,7 +27,7 @@ import org.junit.BeforeClass;
  *
  * @author Rick
  */
-public class AdministrarUsuariosServiceTeste {
+public class AdministrarUsuariosServiceTest {
     
     private AdministrarUsuariosService serviceEmTeste;
     UsuarioJpaController controller;
@@ -47,13 +47,13 @@ public class AdministrarUsuariosServiceTeste {
     
     @BeforeClass
     public static void classSetUp(){
-        PopulateDB.recreateDB();
+        PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateUsuario();
     }
     
     @AfterClass
     public static void tearDown() {
-       PopulateDB.recreateDB();
+       PopulateDB.recreateDB("prosub", "root", "");
     }
     
    

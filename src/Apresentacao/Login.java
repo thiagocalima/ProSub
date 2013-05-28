@@ -178,7 +178,7 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        PopulateDB.fullSetupDB();
+        PopulateDB.fullSetupDB("prosub", "root", "");
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

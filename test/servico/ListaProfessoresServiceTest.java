@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Service.Testes;
+package servico;
 
 import DataMapper.PopulateDB;
 import DataMapper.ProfessorJpaController;
@@ -22,14 +22,14 @@ import static org.junit.Assert.*;
  *
  * @author Rick
  */
-public class ListaProfessoresServiceTeste {
+public class ListaProfessoresServiceTest {
     
     private ListaProfessoresService serviceEmTeste;
     
     @Before
     public void setUp() {
         
-        PopulateDB.fullSetupDB();
+        PopulateDB.fullSetupDB("prosub", "root", "");
         serviceEmTeste = new ListaProfessoresService();
         
     }

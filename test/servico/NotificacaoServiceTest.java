@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Service.Testes;
+package servico;
 
 import DataMapper.AusenciaJpaController;
 import DataMapper.PopulateDB;
@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
  *
  * @author Leticia
  */
-public class NotificacaoServiceTestes {
+public class NotificacaoServiceTest {
     
     private NotificacaoService serviceEmTeste;
     private EntityManagerFactory emf;
@@ -62,7 +62,7 @@ public class NotificacaoServiceTestes {
     
     @BeforeClass
     public static void classSetUp() {
-        PopulateDB.recreateDB();
+        PopulateDB.recreateDB("prosub", "root", "");
         PopulateDB.populateProfessores();
     }
     

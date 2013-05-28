@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Service.Testes;
+package servico;
 
 import DataMapper.PopulateDB;
 import DataMapper.UsuarioJpaController;
@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  *
  * @author Rick
  */
-public class LoginServiceTeste {
+public class LoginServiceTest {
     
     Usuario user;
     LoginService LgnService;
@@ -33,13 +33,13 @@ public class LoginServiceTeste {
     UsuarioJpaController UserController;
     
     
-    public LoginServiceTeste() {
+    public LoginServiceTest() {
     }
     
     @Before
     public void setUp() {
         
-        PopulateDB.recreateDB();
+        PopulateDB.recreateDB("prosub", "root", "");
         
         user = new Usuario("Calebe","123456");
         
@@ -55,7 +55,7 @@ public class LoginServiceTeste {
         try {
             UserController.destroy(user.getId());
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(LoginServiceTeste.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginServiceTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
