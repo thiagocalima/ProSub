@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
  *
  * @author Leticia
  */
-public class NotificacaoServiceTest {
+public class NotificacaoServiceTestes {
     
     private NotificacaoService serviceEmTeste;
     private EntityManagerFactory emf;
