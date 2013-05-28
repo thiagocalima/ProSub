@@ -24,7 +24,7 @@ public class PopulateDB {
     
     public static void fullSetupDB(){
                 
-        dropDB("prosub", "root", "bla");
+        dropDB("prosub", "root", "root");
         createDB("prosub", "root", "root");
         populateDB();
     }
