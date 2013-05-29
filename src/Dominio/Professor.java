@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  *
@@ -119,19 +121,19 @@ public class Professor implements Serializable {
 
     }
 
-    public List<Aula> verificarAulasPerdidasNoPeriodo(Periodo periodoAusencia) {
+    public List<Aula> verificarAulasPerdidasNoPeriodo(Interval periodoAusencia) {
         
-        int diasEntre = this.diasEntre(periodoAusencia);
+        //int diasEntre = this.diasEntre(periodoAusencia);
         
-        Calendar data = periodoAusencia.getLimiteInferior();
-        Calendar finalAusencia = periodoAusencia.getLimiteSuperior();
+        DateTime data = periodoAusencia.getStart();
+        DateTime finalAusencia = periodoAusencia.getEnd();
         
-        finalAusencia.set(Calendar.HOUR_OF_DAY, 23);
-        finalAusencia.set(Calendar.MINUTE, 59);
+//        finalAusencia.set(Calendar.HOUR_OF_DAY, 23);
+//        finalAusencia.set(Calendar.MINUTE, 59);
         
         List<Aula> aulasComprometidas = new LinkedList<Aula>();
         
-        while(data.before(periodoAusencia.getLimiteSuperior())){
+        while(data.before(periodoAusencia.getEnd())){
             
             for(Aula aula : this.grade){
                 if(data.get(Calendar.DAY_OF_WEEK) == aula.getDiaDaSemana()){
@@ -149,27 +151,27 @@ public class Professor implements Serializable {
         return aulasComprometidas;
     }
    
-    private int diasEntre(Periodo periodo){
-        
-        Calendar comeco = periodo.getLimiteInferior();
-        Calendar fim = periodo.getLimiteSuperior();
-        
-        Calendar data = (Calendar)comeco.clone();
-        
-        int diasEntre = 0;
-        
-        if(comeco.equals(fim)){
-            diasEntre = 2; //Contando os extremos
-        }else{
-            diasEntre = 1;
-        }
-        
-        while(data.before(fim)){
-            data.add(Calendar.DAY_OF_MONTH, 1);
-            diasEntre++;
-        }
-        
-        return diasEntre;
-    }
+//    private int diasEntre(Periodo periodo){
+//        
+//        Calendar comeco = periodo.getLimiteInferior();
+//        Calendar fim = periodo.getLimiteSuperior();
+//        
+//        Calendar data = (Calendar)comeco.clone();
+//        
+//        int diasEntre = 0;
+//        
+//        if(comeco.equals(fim)){
+//            diasEntre = 2; //Contando os extremos
+//        }else{
+//            diasEntre = 1;
+//        }
+//        
+//        while(data.before(fim)){
+//            data.add(Calendar.DAY_OF_MONTH, 1);
+//            diasEntre++;
+//        }
+//        
+//        return diasEntre;
+//    }
     
 }

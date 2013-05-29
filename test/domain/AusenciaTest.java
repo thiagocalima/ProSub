@@ -7,7 +7,6 @@ package domain;
 
 import Dominio.Ausencia;
 import Dominio.EstadoAusencia;
-import Dominio.Periodo;
 import Dominio.Professor;
 import java.lang.reflect.Field;
 import junit.framework.Assert;
@@ -15,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.easymock.*;
+import org.joda.time.Interval;
 
 /**
  *
@@ -24,7 +24,7 @@ public class AusenciaTest {
     
     private Professor professor;
     private Professor professorSubstituto;
-    private Periodo periodo;
+    private Interval periodo;
     private Ausencia ausencia;
     private String motivo;
     private EstadoAusencia estado;

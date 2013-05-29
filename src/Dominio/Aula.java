@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.joda.time.Interval;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Aula implements Serializable {
     private Long id;
     
     @OneToOne
-    private Periodo periodo;
+    private Interval periodo;
     
     private int diaDaSemana;
     
@@ -32,7 +33,7 @@ public class Aula implements Serializable {
         
     }
 
-    public Aula(int diaDaSemana, Periodo periodo) {
+    public Aula(int diaDaSemana, Interval periodo) {
         
         this.periodo = periodo;
         this.diaDaSemana = diaDaSemana;
@@ -82,7 +83,7 @@ public class Aula implements Serializable {
     /**
      * @return the periodo
      */
-    public Periodo getPeriodo() {
+    public Interval getPeriodo() {
         return periodo;
     }
 
@@ -99,16 +100,25 @@ public class Aula implements Serializable {
             return false;
         }
         
-        Periodo p1 = this.getPeriodo();
-        Periodo p2 = aula2.getPeriodo();
+        Interval p1 = this.getPeriodo();
+        Interval p2 = aula2.getPeriodo();
         
-        if((p1.getLimiteSuperior().after(p2.getLimiteInferior()) && p1.getLimiteSuperior().before(p2.getLimiteSuperior()))  ||    
-                ( p1.getLimiteInferior().after(p2.getLimiteInferior()) && p1.getLimiteInferior().before(p2.getLimiteSuperior())  )
-          ){
-            return true;  
-          }
+        Interval intervalo = p1.overlap(p2);
         
-        return false;
+        if(intervalo != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+//        if((p1.getLimiteSuperior().after(p2.getLimiteInferior()) && p1.getLimiteSuperior().before(p2.getLimiteSuperior()))  ||    
+//                ( p1.getLimiteInferior().after(p2.getLimiteInferior()) && p1.getLimiteInferior().before(p2.getLimiteSuperior())  )
+//          ){
+//            return true;  
+//          }
+        
+        //return false;
 
     }
     

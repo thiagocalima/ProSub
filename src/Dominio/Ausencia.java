@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import org.joda.time.Interval;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Ausencia implements Serializable {
     private Professor professor;
     
     @OneToOne
-    private Periodo periodo;
+    private Interval periodo;
     
     private String motivo;
     
@@ -45,7 +46,7 @@ public class Ausencia implements Serializable {
     
     }
 
-    public Ausencia(String codigo, Periodo periodo, Professor professor, String motivo) {
+    public Ausencia(String codigo, Interval periodo, Professor professor, String motivo) {
         this.codigo = codigo;
         this.periodo = periodo;
         this.professor = professor;
@@ -96,11 +97,11 @@ public class Ausencia implements Serializable {
         this.professor = professor;
     }
 
-    public Periodo getPeriodo() {
+    public Interval getPeriodo() {
         return periodo;
     }
     
-    public void setPeriodo(Periodo periodo) {
+    public void setPeriodo(Interval periodo) {
         this.periodo = periodo;
     }
 
