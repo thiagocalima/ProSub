@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
 import org.joda.time.Interval;
 
 /**
@@ -105,7 +107,7 @@ public class Professor implements Serializable {
 
     public boolean  EhCompativelCom(List<Aula> aulas) {
         
-        Collections.sort(this.grade, new AulaComparator());
+//        Collections.sort(this.grade, new AulaComparator());
         
         boolean ehCompativel = true;
 
@@ -122,32 +124,43 @@ public class Professor implements Serializable {
     }
 
     public List<Aula> verificarAulasPerdidasNoPeriodo(Interval periodoAusencia) {
-        
-        //int diasEntre = this.diasEntre(periodoAusencia);
-        
+              
         DateTime data = periodoAusencia.getStart();
         DateTime finalAusencia = periodoAusencia.getEnd();
         
-//        finalAusencia.set(Calendar.HOUR_OF_DAY, 23);
-//        finalAusencia.set(Calendar.MINUTE, 59);
-        
         List<Aula> aulasComprometidas = new LinkedList<Aula>();
         
-        while(data.before(periodoAusencia.getEnd())){
+        
+        if(Hours.hoursBetween(data, finalAusencia).isGreaterThan(Hours.hours(24)) ||
+                Hours.hoursBetween(data, finalAusencia).equals(Hours.hours(24))){
             
+            
+            Days dias = Days.daysBetween(data, finalAusencia);
+            
+            
+            while(dias.isGreaterThan(Days.days(0))){
+                
+                for(Aula aula : this.grade){
+                    if(aula.getDiaDaSemana() == data.getDayOfWeek() &&
+                            !aulasComprometidas.contains(aula)){
+                        aulasComprometidas.add(aula);
+                    }
+                }
+                
+                dias = dias.minus(1);
+                
+            }
+            
+        }else{ //menos de 24 horas de ausência
             for(Aula aula : this.grade){
-                if(data.get(Calendar.DAY_OF_WEEK) == aula.getDiaDaSemana()){
+                if(  aula.getDiaDaSemana() == periodoAusencia.getStart().getDayOfWeek() &&
+                        aula.bateHorarioCom(periodoAusencia) && 
+                        !aulasComprometidas.contains(aula) ){
                     aulasComprometidas.add(aula);
                 }
             }
-            
-            data.add(Calendar.DAY_OF_MONTH, 1);
-            
-            if(aulasComprometidas.size() == this.grade.size()){
-                break;
-            }   
         }
-        
+              
         return aulasComprometidas;
     }
    

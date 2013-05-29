@@ -5,6 +5,7 @@
 package domain;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.joda.time.Interval;
 import org.junit.Assert;
+import org.joda.time.Instant;
 
 /**
  *
@@ -42,7 +44,7 @@ public class IntervalTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void hello() {
+    public void testandoIntervalos() {
         
         DateTime start1 = new DateTime(2004, 12, 25, 0, 0, 0, 0);
         DateTime end1 = new DateTime(2005, 1, 1, 0, 0, 0, 0);
@@ -65,9 +67,10 @@ public class IntervalTest {
         Assert.assertNull(interval3.overlap(interval1));
         Assert.assertNull(interval3.overlap(interval2));
         
+        DateTime start5 = new DateTime(2013, 05, 28, 0, 0);
         
-        
-        
-        
+        Assert.assertEquals(DateTimeConstants.TUESDAY, start5.getDayOfWeek());
+
     }
+    
 }

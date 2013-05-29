@@ -4,13 +4,14 @@
  */
 package DataMapper;
 import Dominio.Aula;
-import Dominio.Periodo;
 import Dominio.Professor;
 import Dominio.Usuario;
 import java.sql.*;
 import java.util.Calendar;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  *
@@ -19,7 +20,8 @@ import javax.persistence.Persistence;
 public class PopulateDB {
     
     public static void main (String[]args){
-        PopulateDB.fullSetupDB("prosub", "root", "root");
+        PopulateDB.fullSetupDB("prosub", "root", "");
+        //PopulateDB.recreateDB("prosub", "root", "");
     }
     
     public static void fullSetupDB(String dbName, String user, String password){
@@ -138,30 +140,33 @@ public class PopulateDB {
     
     private static void populateProfessores(EntityManagerFactory emf){
         
-        
-        PeriodoJpaController periodoJpa = new PeriodoJpaController(emf);
         AulaJpaController aulaJpa = new AulaJpaController(emf);
         
-        Calendar comeco1 = Calendar.getInstance();
-        Calendar fim1 = Calendar.getInstance();
-        comeco1.set(2013, 06, 10, 10, 10);
-        fim1.set(2013, 06, 10, 10, 20);
+//        Calendar comeco1 = Calendar.getInstance();
+//        Calendar fim1 = Calendar.getInstance();
+//        comeco1.set(2013, 06, 10, 10, 10);
+//        fim1.set(2013, 06, 10, 10, 20);
         
-        Periodo periodo = new Periodo(comeco1, fim1);
+        DateTime comeco1 = new DateTime(2013, 06, 10, 10, 10);
+        DateTime fim1 = new DateTime(2013, 06, 10, 10, 20);
         
-        periodoJpa.create(periodo);
+        Interval periodo = new Interval(comeco1, fim1);
         
         Aula aula = new Aula(Calendar.MONDAY, periodo);
         aulaJpa.create(aula);
         
-        Calendar comeco2 = Calendar.getInstance();
-        Calendar fim2 = Calendar.getInstance();
-        comeco2.set(2013, 06, 10, 18, 20);
-        fim2.set(2013, 06, 10, 20, 0);
+//        Calendar comeco2 = Calendar.getInstance();
+//        Calendar fim2 = Calendar.getInstance();
+//        comeco2.set(2013, 06, 10, 18, 20);
+//        fim2.set(2013, 06, 10, 20, 0);
         
-        Periodo periodo2 = new Periodo(comeco2, fim2);
+        DateTime comeco2 = new DateTime(2013, 06, 10, 18, 20);
+        DateTime fim2 = new DateTime(2013, 06, 10, 20, 0);
         
-        periodoJpa.create(periodo2);
+        Interval periodo2 = new Interval(comeco2, fim2);
+
+        
+        //Periodo periodo2 = new Periodo(comeco2, fim2);
         
         Aula aula2 = new Aula(Calendar.MONDAY, periodo2);
         aulaJpa.create(aula2);

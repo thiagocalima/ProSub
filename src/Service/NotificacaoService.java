@@ -5,13 +5,11 @@
 package Service;
 
 import DataMapper.AusenciaJpaController;
-import DataMapper.PeriodoJpaController;
 import DataMapper.ProfessorJpaController;
 import DataMapper.exceptions.NonexistentEntityException;
 import Dominio.Aula;
 import Dominio.Ausencia;
 import Dominio.EstadoAusencia;
-import Dominio.Periodo;
 import Dominio.Professor;
 import Modelos.AusenciaModel;
 import java.text.ParseException;
@@ -30,7 +28,6 @@ import javax.persistence.Persistence;
 public class NotificacaoService {
     
     private AusenciaJpaController ausenciaController;
-    private PeriodoJpaController periodoController;
     private ProfessorJpaController profController;
     
     public NotificacaoService(){

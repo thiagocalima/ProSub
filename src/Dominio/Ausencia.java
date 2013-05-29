@@ -5,12 +5,15 @@
 package Dominio;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
 import org.joda.time.Interval;
 
 /**
@@ -27,7 +30,8 @@ public class Ausencia implements Serializable {
     @ManyToOne
     private Professor professor;
     
-    @OneToOne
+    @Columns(columns={@Column(name="startTime"),@Column(name="endTime")})
+    @Type(type="org.joda.time.contrib.hibernate.PersistentInterval")  
     private Interval periodo;
     
     private String motivo;

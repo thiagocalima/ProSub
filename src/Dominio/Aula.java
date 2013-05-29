@@ -5,12 +5,17 @@
 package Dominio;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
+import org.joda.time.contrib.hibernate.PersistentInterval;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 /**
@@ -24,7 +29,8 @@ public class Aula implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToOne
+    @Columns(columns={@Column(name="startTime"),@Column(name="endTime")})
+    @Type(type="org.joda.time.contrib.hibernate.PersistentInterval")    
     private Interval periodo;
     
     private int diaDaSemana;
@@ -94,32 +100,45 @@ public class Aula implements Serializable {
         return diaDaSemana;
     }
 
-    public boolean bateCom(Aula aula2) {
+    public boolean bateCom(Aula outraAula) {
         
-        if(this.diaDaSemana != aula2.getDiaDaSemana()){
+        if(this.diaDaSemana != outraAula.getDiaDaSemana()){
             return false;
+        }else if (this.bateHorarioCom(outraAula.getPeriodo())){
+            return true;
         }
         
-        Interval p1 = this.getPeriodo();
-        Interval p2 = aula2.getPeriodo();
+        return false;
+    }
+    
+    public boolean bateHorarioCom(Interval outroPeriodo){
         
-        Interval intervalo = p1.overlap(p2);
+        int anoIntervalo = outroPeriodo.getStart().getYear();
+        int mesIntervalo = outroPeriodo.getStart().getMonthOfYear();
+        int diaIntervalo = outroPeriodo.getStart().getDayOfMonth();
         
-        if(intervalo != null){
+        int horaInicio = this.getPeriodo().getStart().getHourOfDay();
+        int minutoInicio = this.getPeriodo().getStart().getMinuteOfHour();
+        
+        int horaFim = this.getPeriodo().getEnd().getHourOfDay();
+        int minutoFim = this.getPeriodo().getEnd().getMinuteOfHour();
+        
+        
+        DateTime tempInicio = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaInicio, minutoInicio);
+        DateTime tempFim = new DateTime(anoIntervalo, mesIntervalo, diaIntervalo, horaFim, minutoFim);
+        
+        Interval intervaloTemp = new Interval(tempInicio, tempFim);
+        
+        Interval conflito = intervaloTemp.overlap(outroPeriodo);
+        
+        if(conflito != null){
             return true;
         }
         else{
             return false;
         }
-        
-//        if((p1.getLimiteSuperior().after(p2.getLimiteInferior()) && p1.getLimiteSuperior().before(p2.getLimiteSuperior()))  ||    
-//                ( p1.getLimiteInferior().after(p2.getLimiteInferior()) && p1.getLimiteInferior().before(p2.getLimiteSuperior())  )
-//          ){
-//            return true;  
-//          }
-        
-        //return false;
-
+            
     }
     
 }
+

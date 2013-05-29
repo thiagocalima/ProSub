@@ -5,7 +5,6 @@
 package domain;
 
 import Dominio.Aula;
-import Dominio.AulaComparator;
 import Dominio.Professor;
 import java.util.Calendar;
 import java.util.Collection;
@@ -14,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.easymock.EasyMock;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
 import org.junit.After;
 import org.junit.Assert;
@@ -26,6 +26,8 @@ import static org.junit.Assert.*;
  * @author Leticia
  */
 public class ProfessorTest {
+    
+    //Dá pra mockar classe Aula
     
     private Professor objetoEmTeste;
     private Interval periodo;
@@ -57,18 +59,8 @@ public class ProfessorTest {
     public void setUp() {
         
         nome = "ariovaldson";
-//        aula1 = EasyMock.createMock(Aula.class);
-//        aula2 = EasyMock.createMock(Aula.class);
-//        aula3 = EasyMock.createMock(Aula.class);
-//        aula4 = EasyMock.createMock(Aula.class);
-//        aula5 = EasyMock.createMock(Aula.class);
             
         objetoEmTeste = new Professor(nome);
-        
-//        Calendar limiteInfP1 = Calendar.getInstance();
-//        Calendar limiteSupP1 = Calendar.getInstance();
-//        limiteInfP1.set(1900+113, 05, 20, 22, 40);
-//        limiteSupP1.set(1900+113, 05, 20, 23, 59);
         
         DateTime limiteInfP1 = new DateTime(2013, 05, 20, 22, 40);
         DateTime limiteSupP1 = new DateTime(2013, 05, 20, 23, 59);
@@ -76,90 +68,41 @@ public class ProfessorTest {
         
         p1 = new Interval(limiteInfP1, limiteSupP1);
         
-//        Calendar limiteInfP2 = Calendar.getInstance();
-//        Calendar limiteSupP2 = Calendar.getInstance();
-//        
-//        limiteInfP2.set(1900+113, 05, 20, 20, 40);
-//        limiteSupP2.set(1900+113, 05, 20, 21, 40);
-        
         DateTime limiteInfP2 = new DateTime(2013, 05, 20, 20, 40);
         DateTime limiteSupP2 = new DateTime(2013, 05, 20, 21, 40);
         
         p2 = new Interval(limiteInfP2, limiteSupP2);
-        
-//        Calendar limiteInfP3 = Calendar.getInstance();
-//        Calendar limiteSupP3 = Calendar.getInstance();
-//        
-//        limiteInfP3.set(1900+113, 05, 20, 19, 45);
-//        limiteSupP3.set(1900+113, 05, 20, 20, 59);
         
         DateTime limiteInfP3 = new DateTime(2013, 05, 20, 19, 45);
         DateTime limiteSupP3 = new DateTime(2013, 05, 20, 20, 59);
                 
         p3 = new Interval(limiteInfP3, limiteSupP3);
         
-        
-//        Calendar limiteInfP4 = Calendar.getInstance();
-//        Calendar limiteSupP4 = Calendar.getInstance();
-//        
-//        limiteInfP4.set(1900+113, 05, 20, 19, 15);
-//        limiteSupP4.set(1900+113, 05, 20, 20, 00);
-        
         DateTime limiteInfP4 = new DateTime(2013, 05, 20, 19, 15);
         DateTime limiteSupP4 = new DateTime(2013, 05, 20, 20, 00);
                       
         p4 = new Interval(limiteInfP4, limiteSupP4);
-        
-//        Calendar limiteInfP5 = Calendar.getInstance();
-//        Calendar limiteSupP5 = Calendar.getInstance();
-//        
-//        limiteInfP5.set(1900+113, 05, 20, 19, 25);
-//        limiteSupP5.set(1900+113, 05, 20, 20, 30);
         
         DateTime limiteInfP5 = new DateTime(2013, 05, 20, 19, 25);
         DateTime limiteSupP5 = new DateTime(2013, 05, 20, 20, 30);
         
         p5 = new Interval(limiteInfP5, limiteSupP5);
         
-//        Calendar limiteInfP6 = Calendar.getInstance();
-//        Calendar limiteSupP6 = Calendar.getInstance();
-//        
-//        limiteInfP6.set(1900+113, 05, 20, 22, 50);
-//        limiteSupP6.set(1900+113, 05, 20, 23, 30);
-        
         DateTime limiteInfP6 = new DateTime(2013, 05, 20, 22, 50);
         DateTime limiteSupP6 = new DateTime(2013, 05, 20, 23, 30);
         
         p6 = new Interval(limiteInfP6, limiteSupP6);
-        
-//        Calendar limiteInfP7 = Calendar.getInstance();
-//        Calendar limiteSupP7 = Calendar.getInstance();
-//        
-//        limiteInfP7.set(1900+113, 05, 20, 10, 10);
-//        limiteSupP7.set(1900+113, 05, 20, 10, 30);
+       
         
         DateTime limiteInfP7 = new DateTime(2013, 05, 20, 10, 10);
         DateTime limiteSupP7 = new DateTime(2013, 05, 20, 10, 30);
         
         p7 = new Interval(limiteInfP7, limiteSupP7);
         
-//        Calendar limiteInfP8 = Calendar.getInstance();
-//        Calendar limiteSupP8 = Calendar.getInstance();
-        
         DateTime limiteInfP8 = new DateTime(2013, 05, 21, 10, 10);
         DateTime limiteSupP8 = new DateTime(2013, 05, 21, 18, 10);
         
-//        limiteInfP8.set(1900+113, 05, 21, 10, 10);
-//        limiteSupP8.set(1900+113, 05, 21, 18, 10);
-        
         Interval p8 = new Interval(limiteInfP8, limiteSupP8);
-        
-        
-//        EasyMock.expect(aula1.getPeriodo()).andReturn(p1);
-//        EasyMock.expect(aula2.getPeriodo()).andReturn(p2);
-//        EasyMock.expect(aula3.getPeriodo()).andReturn(p3);
-//        EasyMock.expect(aula4.getPeriodo()).andReturn(p4);
-//        EasyMock.expect(aula5.getPeriodo()).andReturn(p5);
         
         aula1 = new Aula(Calendar.MONDAY, p1);
         aula2 = new Aula(Calendar.TUESDAY, p2);
@@ -168,13 +111,6 @@ public class ProfessorTest {
         aula5 = new Aula(Calendar.THURSDAY, p5);
         aula6 = new Aula(Calendar.MONDAY, p6);
         aula7 = new Aula(Calendar.SATURDAY, p7);
-        
-        
-//      EasyMock.expect(aula1.getDiaDaSemana()).andReturn(Calendar.MONDAY);
-//      EasyMock.expect(aula2.getDiaDaSemana()).andReturn(Calendar.TUESDAY);
-//      EasyMock.expect(aula3.getDiaDaSemana()).andReturn(Calendar.WEDNESDAY);
-//      EasyMock.expect(aula4.getDiaDaSemana()).andReturn(Calendar.THURSDAY);
-//      EasyMock.expect(aula5.getDiaDaSemana()).andReturn(Calendar.THURSDAY);
         
         aulas = new LinkedList<Aula>();
         
@@ -211,7 +147,7 @@ public class ProfessorTest {
         
         objetoEmTeste.adicionarAula(aula5);
         
-        Collections.sort(aulas, new AulaComparator());
+        //Collections.sort(aulas, new AulaComparator());
 
         Assert.assertFalse(objetoEmTeste.EhCompativelCom(aulas));
         
@@ -231,43 +167,75 @@ public class ProfessorTest {
     @Test
     public void testeDeveDevolverAulasQuePerdeNoPeriodo(){
         
+        DateTime inicio1 = new DateTime(2013, 05, 24, 10, 10);
+        DateTime fim1 = new DateTime(2013, 05, 26, 10, 30);
+        
+        Interval ausencia1 = new Interval(inicio1, fim1);
+        
+        DateTime inicioAula1 = new DateTime(2013, 05, 24, 19, 20);
+        DateTime fimAula1 = new DateTime(2013, 05, 24, 21, 0);
+        
+        Interval intervalAula1 = new Interval(inicioAula1, fimAula1);
+        
+        Aula aula1 = new Aula(DateTimeConstants.TUESDAY, intervalAula1);
+        
+        objetoEmTeste = new Professor("umProf");
         objetoEmTeste.adicionarAula(aula1);
+        
+        List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
+        
+        Assert.assertEquals(0, aulasPerdidas.size());
+        
+        DateTime inicioAula2 = new DateTime(2013, 05, 24, 05, 0);
+        DateTime fimAula2 = new DateTime(2013, 05, 24, 07, 0);
+        
+        Interval intervalAula2 = new Interval(inicioAula2, fimAula2);
+        
+        Aula aula2 = new Aula(DateTimeConstants.FRIDAY, intervalAula2);     
+        
+        objetoEmTeste = new Professor("outroProf");
         objetoEmTeste.adicionarAula(aula2);
+        
+        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia1);
+        
+        Assert.assertEquals(1, aulasPerdidas.size());
+        Assert.assertEquals(aula2, aulasPerdidas.toArray()[0]);
+        
+        
+        
+        DateTime inicio2 = new DateTime(2013, 05, 29, 10, 00);
+        DateTime fim2 = new DateTime(2013, 05, 29, 14, 00);
+        
+        Interval ausencia2 = new Interval(inicio2, fim2);
+        
+        DateTime inicioAula3 = new DateTime(2013, 05, 24, 10, 0);
+        DateTime fimAula3 = new DateTime(2013, 05, 24, 11, 0);
+        
+        Interval intervalAula3 = new Interval(inicioAula3, fimAula3);
+        
+        Aula aula3 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula3);      
+        
+        objetoEmTeste = new Professor("outroProf");
         objetoEmTeste.adicionarAula(aula3);
+        
+        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
+        
+        Assert.assertEquals(1, aulasPerdidas.size());
+        Assert.assertEquals(aula3, aulasPerdidas.toArray()[0]);
+
+        DateTime inicioAula4 = new DateTime(2013, 05, 24, 15, 0);
+        DateTime fimAula4 = new DateTime(2013, 05, 24, 17, 0);
+        
+        Interval intervalAula4 = new Interval(inicioAula4, fimAula4);
+        
+        Aula aula4 = new Aula(DateTimeConstants.WEDNESDAY, intervalAula4);      
+        
+        objetoEmTeste = new Professor("outroProf");
         objetoEmTeste.adicionarAula(aula4);
         
-//        Calendar comeco1 = Calendar.getInstance();
-//        comeco1.set(1900 + 113, 01, 01, 0, 0);
-//        Calendar fim1 = Calendar.getInstance();
-//        fim1.set(1900 + 114, 01 , 01, 0, 0);
+        aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(ausencia2);
         
-        DateTime comeco1 = new DateTime(2013, 01, 01, 0, 0);
-        DateTime fim1 = new DateTime(2014, 01 , 01, 0, 0);
+        Assert.assertEquals(0, aulasPerdidas.size());        
         
-        Interval periodoAusencia = new Interval(comeco1, fim1);
-        
-        List<Aula> aulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(periodoAusencia);
-        
-        Assert.assertEquals(aulasPerdidas.size(), 4);
-        
-//        Calendar comeco2 = Calendar.getInstance();
-//        comeco2.set(1900 + 113, 05, 17, 1, 0);
-        
-        DateTime comeco2 = new DateTime(2013, 05, 17, 1, 0);
-        DateTime fim2 = new DateTime(2013, 05, 19, 1, 10);
-        
-//        Calendar fim2 = Calendar.getInstance();
-//        fim2.set(1900 + 113, 05, 19, 1, 10);
-        
-        Interval periodoAusencia2 = new Interval(comeco2, fim2);
-        
-        //int dayOfWeek = comeco2.get(Calendar.DAY_OF_WEEK);
-        int dayOfWeek = comeco2.getDayOfWeek();
-        
-        int primeiroDia = Calendar.SUNDAY;
-       
-        List<Aula> outrasAulasPerdidas = objetoEmTeste.verificarAulasPerdidasNoPeriodo(periodoAusencia2);
-        
-        Assert.assertEquals(3, outrasAulasPerdidas.size());
     }
 }
