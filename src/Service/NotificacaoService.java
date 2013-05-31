@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  *
@@ -33,23 +35,30 @@ public class NotificacaoService {
     public NotificacaoService(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProSubPU");
         ausenciaController = new AusenciaJpaController(emf);
-        periodoController = new PeriodoJpaController(emf);
+//        periodoController = new PeriodoJpaController(emf);
         profController = new ProfessorJpaController(emf);
     }
     
     public String notificarAusencia(Long idProfessor, String dataInicio, String dataFim, String motivo, Long idProfessorSubstituto) throws ParseException {
         
-        Calendar inicio = Calendar.getInstance();
-        Calendar fim = Calendar.getInstance();
+        //Calendar inicio = Calendar.getInstance();
+        //Calendar fim = Calendar.getInstance();
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
-        inicio.setTime(sdf.parse(dataInicio));
-        fim.setTime(sdf.parse(dataFim));
         
-        Periodo periodo = new Periodo(inicio, fim);
+        DateTime inicio = new DateTime(sdf.parse(dataInicio));
+        DateTime fim = new DateTime(sdf.parse(dataFim));
         
-        periodoController.create(periodo);
+        Interval periodo = new Interval(inicio, fim);
+        
+        
+        //inicio.setTime(sdf.parse(dataInicio));
+        //fim.setTime(sdf.parse(dataFim));
+        
+        //Periodo periodo = new Periodo(inicio, fim);
+        
+        //periodoController.create(periodo);
         
         Professor professor = profController.findProfessor(idProfessor);
         Professor professorSubstituto = profController.findProfessor(idProfessorSubstituto);
@@ -70,18 +79,16 @@ public class NotificacaoService {
 
     public void editarAusencia(String codigo, String dataInicio, String dataFim, String motivo, Long idSubstituto) throws ParseException, NonexistentEntityException, Exception {
         
-        Calendar inicio = Calendar.getInstance();
-        Calendar fim = Calendar.getInstance();
+        //Calendar inicio = Calendar.getInstance();
+        //Calendar fim = Calendar.getInstance();
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
-        inicio.setTime(sdf.parse(dataInicio));
-        fim.setTime(sdf.parse(dataFim));
+        DateTime inicio = new DateTime(sdf.parse(dataInicio));
+        DateTime fim = new DateTime(sdf.parse(dataFim));
         
-        Periodo periodo = new Periodo(inicio, fim);
+        Interval periodo = new Interval(inicio, fim);
         
-        periodoController.create(periodo);
-
         Professor professorSubstituto = profController.findProfessor(idSubstituto);
         
         Random r = new Random();
@@ -108,10 +115,11 @@ public class NotificacaoService {
             modelo.professorSubstituto = ausencia.getIndicacaoSubstituto().getNome();
             modelo.estado = this.determinarEstado(ausencia.getEstado());
             modelo.id = ausencia.getId();
-            Periodo p = ausencia.getPeriodo();
+            //Periodo p = ausencia.getPeriodo();
+            Interval p = ausencia.getPeriodo();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            modelo.dataInicio = sdf.format(p.getLimiteInferior().getTime());
-            modelo.dataInicio = sdf.format(p.getLimiteSuperior().getTime());
+            modelo.dataInicio = sdf.format(p.getStart().toDate());
+            modelo.dataInicio = sdf.format(p.getEnd().toDate());
             
             modelos.add(modelo);
         }

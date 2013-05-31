@@ -1,8 +1,10 @@
+package Dominio;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -12,9 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
-import org.joda.time.contrib.hibernate.PersistentInterval;
+import org.hibernate.annotations.Columns;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
